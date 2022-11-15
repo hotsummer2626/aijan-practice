@@ -1,0 +1,62 @@
+$heading-font-family: Libre Baskerville;
+$body-font-family: Source Sans Pro;
+
+// header text
+@mixin main-header-1 {
+  font-size: 40px;
+  line-height: 56px;
+  font-family: $heading-font-family;
+}
+@mixin main-header-2 {
+  font-size: 36px;
+  line-height: 46px;
+  font-family: $heading-font-family;
+}
+@mixin main-header-3 {
+  font-size: 24px;
+  line-height: 28px;
+  font-family: $heading-font-family;
+}
+
+// body text
+@mixin body-text-1 {
+  font-size: 32px;
+  line-height: 22px;
+  font-family: $body-font-family;
+}
+@mixin body-text-2 {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 600;
+  font-family: $body-font-family;
+}
+@mixin body-text-3 {
+  font-size: 22px;
+  line-height: 28px;
+  font-family: $body-font-family;
+}
+@mixin body-text-4 {
+  font-size: 20px;
+  line-height: 30px;
+  font-family: $body-font-family;
+}
+@mixin body-text-5 {
+  font-size: 18px;
+  line-height: 24px;
+  font-family: $body-font-family;
+}
+@mixin body-text-6 {
+  font-size: 16px;
+  line-height: 18px;
+  font-family: $body-font-family;
+}
+
+// button text
+@mixin button-text-1 {
+  font-size: 20px;
+  line-height: 22px;
+}
+@mixin button-text-2 {
+  font-size: 18px;
+  line-height: 18px;
+}

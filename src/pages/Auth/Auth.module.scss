@@ -1,0 +1,80 @@
+@import "../../styles/colors.scss";
+@import "../../styles/margin.scss";
+@import "../../styles/font.scss";
+
+.outer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container {
+    border: 1px solid black;
+    width: 843px;
+    height: 600px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    .left {
+      background-image: url("../../assets/Rectangle\ 10041.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    .right {
+      padding: 30px 65px;
+      h3{
+        @include main-header-3;
+        text-align: center;
+        margin-bottom: $margin-bottom-5;
+      }
+      .subtitle{
+        @include body-text-6;
+        color: $gray-3;
+        text-align: center;
+        margin-bottom: $margin-bottom-1;
+      }
+      .loginForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        .title {
+          margin-bottom: $margin-bottom-2;
+        }
+        input {
+          width: 100%;
+          height: 40px;
+          padding: 10px;
+          background: $gray-5;
+          border: 1px solid #000;
+          margin-bottom: $margin-bottom-3;
+        }
+        .forgotPassword {
+          width: 100%;
+          text-align: right;
+        }
+        .rememberMe {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: $margin-bottom-2;
+          input {
+            width: 20px;
+          }
+        }
+        button {
+          width: 100%;
+          height: 40px;
+          background: $gray-3;
+          margin-bottom: $margin-bottom-2;
+        }
+      }
+      .noAccount,.loginWith{
+        @include body-text-6;
+      }
+      .loginWith{
+
+      }
+    }
+  }
+}

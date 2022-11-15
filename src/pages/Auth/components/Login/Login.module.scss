@@ -1,0 +1,54 @@
+@import "../../../../styles/font.scss";
+@import "../../../../styles/colors.scss";
+@import '../../../../styles/margin.scss';
+
+.container {
+  h4 {
+    @include main-header-3;
+    text-align: center;
+    color: $secondary-color;
+    margin-bottom: $margin-bottom-2;
+  }
+  .loginForm{
+    .forgotPassword{
+      @include body-text-6;
+      text-align: right;
+      cursor: pointer;
+      margin-bottom: $margin-bottom-2;
+    }
+  }
+  .noAccount{
+    @include body-text-6;
+    text-align: center;
+    margin-bottom: $margin-bottom-3;
+    span:last-child{
+      color: $secondary-color;
+      cursor: pointer;
+    }
+  }
+  .socialMedia{
+    width: 100%;
+    .title{
+      @include body-text-6;
+      color: $gray-3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $margin-bottom-3;
+      img{
+        width: 90px;
+      }
+      img:last-child{
+        transform: rotate(180deg);
+      }
+    }
+    .mediaList{
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      img{
+        width: 20px;
+      }
+    }
+  }
+}
