@@ -1,0 +1,33 @@
+@import "../../styles/font.scss";
+@import "../../styles/colors.scss";
+@import "../../styles/margin.scss";
+
+.container {
+  margin-bottom: $margin-bottom-3;
+  .label {
+    @include body-text-6;
+    display: block;
+    margin-bottom: $margin-bottom-5;
+  }
+  .options{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    .optionItem{
+      @include body-text-6;
+      width: 150px;
+      height: 40px;
+      line-height: 35px;
+      background: $gray-5;
+      border-radius: 8px;
+      text-align: center;
+      color: $gray-2;
+      cursor: pointer;
+      &.active{
+        border: 1px solid $primary-color;
+        background: $selection-color;
+
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ import appleLogo from "../../../../assets/apple_logo.png";
 import facebookLogo from "../../../../assets/facebook_logo.png";
 import googleLogo from "../../../../assets/google_logo.png";
 
-const Login = () => {
+const Login = ({ setIsLogin }) => {
   return (
     <div className={styles.container}>
       <h4>Welcome back</h4>
@@ -29,7 +29,7 @@ const Login = () => {
       </form>
       <div className={styles.noAccount}>
         <span>Don't have an account?</span>&nbsp;
-        <span>Sign up</span>
+        <span onClick={() => setIsLogin(false)}>Sign up</span>
       </div>
       <div className={styles.socialMedia}>
         <div className={styles.title}>

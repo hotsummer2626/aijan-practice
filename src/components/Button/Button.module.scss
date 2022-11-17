@@ -1,10 +1,11 @@
 @import "../../styles/colors.scss";
 @import "../../styles/font.scss";
-@import '../../styles/margin.scss';
+@import "../../styles/margin.scss";
 
 .container {
   display: flex;
   justify-content: center;
+  margin-top: $margin-bottom-2;
   margin-bottom: $margin-bottom-3;
   button {
     @include button-text-2;
@@ -12,5 +13,6 @@
     border-radius: 50px;
     background: $primary-color;
     color: #fff;
+    cursor: pointer;
   }
 }
