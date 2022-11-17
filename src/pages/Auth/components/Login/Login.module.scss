@@ -1,6 +1,6 @@
 @import "../../../../styles/font.scss";
 @import "../../../../styles/colors.scss";
-@import '../../../../styles/margin.scss';
+@import "../../../../styles/margin.scss";
 
 .container {
   h4 {
@@ -9,43 +9,49 @@
     color: $secondary-color;
     margin-bottom: $margin-bottom-2;
   }
-  .loginForm{
-    .forgotPassword{
+  .loginForm {
+    .forgotPassword {
       @include body-text-6;
       text-align: right;
       cursor: pointer;
     }
+    .error {
+      @include body-text-6;
+      text-align: center;
+      color: $error-color;
+      margin-top: $margin-bottom-3;
+    }
   }
-  .noAccount{
+  .noAccount {
     @include body-text-6;
     text-align: center;
     margin-bottom: $margin-bottom-3;
-    span:last-child{
+    span:last-child {
       color: $secondary-color;
       cursor: pointer;
     }
   }
-  .socialMedia{
+  .socialMedia {
     width: 100%;
-    .title{
+    .title {
       @include body-text-6;
       color: $gray-3;
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: $margin-bottom-3;
-      img{
+      img {
         width: 90px;
       }
-      img:last-child{
+      img:last-child {
         transform: rotate(180deg);
       }
     }
-    .mediaList{
+    .mediaList {
       display: flex;
       justify-content: center;
       gap: 30px;
-      img{
+      img {
         width: 20px;
       }
     }

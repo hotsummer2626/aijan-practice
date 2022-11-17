@@ -184,7 +184,7 @@ const Register = ({ setIsLogin }) => {
             />
           </>
         )}
-        <Button text="Next" />
+        <Button text={registerStage === 3 ? "Create Account" : "Next"} />
       </form>
       <div className={styles.haveAccount}>
         <span>Already Registered?</span>&nbsp;

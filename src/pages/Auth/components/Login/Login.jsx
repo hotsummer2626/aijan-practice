@@ -7,6 +7,8 @@ import appleLogo from "../../../../assets/apple_logo.png";
 import facebookLogo from "../../../../assets/facebook_logo.png";
 import googleLogo from "../../../../assets/google_logo.png";
 import { useDefaultLoginMutation } from "../../../../store/apis/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../../../store/slices/auth";
 
 const Login = ({ setIsLogin }) => {
   const [formData, setFormData] = useState({
@@ -16,14 +18,17 @@ const Login = ({ setIsLogin }) => {
   const [error, setError] = useState({
     emailOrPhoneNumber: {
       hasError: false,
-      errorMsg: "email or phone no. not found",
+      errorMsg: "Required",
     },
     password: {
       hasError: false,
-      errorMsg: "email or phone no. or password incorrect",
+      errorMsg: "Required",
     },
+    response: { hasError: false, errorMsg: "" },
   });
-  const [defaultLogin, result] = useDefaultLoginMutation();
+  const [defaultLogin] = useDefaultLoginMutation();
+  const { auth } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const inputChangeHandler = (inputName) => (e) =>
     setFormData({
@@ -33,11 +38,52 @@ const Login = ({ setIsLogin }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    defaultLogin(formData)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    const isEmailOrPhoneNumberEmpty = formData.emailOrPhoneNumber === "";
+    const isPasswordEmpty = formData.password === "";
+    if (isEmailOrPhoneNumberEmpty || isPasswordEmpty) {
+      setError({
+        ...error,
+        emailOrPhoneNumber: {
+          ...error.emailOrPhoneNumber,
+          hasError: isEmailOrPhoneNumberEmpty,
+        },
+        password: {
+          ...error.password,
+          hasError: isPasswordEmpty,
+        },
+      });
+    }
+    if (!isEmailOrPhoneNumberEmpty && !isPasswordEmpty) {
+      defaultLogin(formData)
+        .then((res) => {
+          if (res.data.error) {
+            return setError({
+              ...error,
+              emailOrPhoneNumber: {
+                ...error.emailOrPhoneNumber,
+                hasError: isEmailOrPhoneNumberEmpty,
+              },
+              password: {
+                ...error.password,
+                hasError: isPasswordEmpty,
+              },
+              response: {
+                hasError: true,
+                errorMsg: res.data.error,
+              },
+            });
+          }
+          setError({
+            ...error,
+            response: {
+              ...error.response,
+              hasError: false,
+            },
+          });
+          dispatch(login(res.data));
+        })
+        .catch((err) => alert(err));
+    }
   };
 
   return (
@@ -63,6 +109,9 @@ const Login = ({ setIsLogin }) => {
           onChange={inputChangeHandler("password")}
         />
         <div className={styles.forgotPassword}>Forgot password?</div>
+        {error.response.hasError && (
+          <div className={styles.error}>{error.response.errorMsg}</div>
+        )}
         <Button text="Login" />
       </form>
       <div className={styles.noAccount}>
