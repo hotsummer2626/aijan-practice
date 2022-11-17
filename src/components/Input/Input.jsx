@@ -4,7 +4,6 @@ import eyeIcon from "../../assets/eye.png";
 
 const Input = ({ label, type, id, placeholder, value, onChange, error }) => {
   const [inputType, setInputType] = useState(type === "date" ? "text" : type);
-  console.log(label,error&&error.hasError)
   return (
     <div className={styles.container}>
       <label htmlFor={id}>

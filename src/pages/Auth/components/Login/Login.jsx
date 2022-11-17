@@ -6,6 +6,7 @@ import line from "../../../../assets/Line 42.png";
 import appleLogo from "../../../../assets/apple_logo.png";
 import facebookLogo from "../../../../assets/facebook_logo.png";
 import googleLogo from "../../../../assets/google_logo.png";
+import { useDefaultLoginMutation } from "../../../../store/apis/auth";
 
 const Login = ({ setIsLogin }) => {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ const Login = ({ setIsLogin }) => {
       errorMsg: "email or phone no. or password incorrect",
     },
   });
+  const [defaultLogin, result] = useDefaultLoginMutation();
 
   const inputChangeHandler = (inputName) => (e) =>
     setFormData({
@@ -31,6 +33,11 @@ const Login = ({ setIsLogin }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    defaultLogin(formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

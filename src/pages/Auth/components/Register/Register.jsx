@@ -3,6 +3,7 @@ import styles from "./Register.module.scss";
 import Input from "../../../../components/Input/Input";
 import Select from "../../../../components/Select/Select";
 import Button from "../../../../components/Button/Button";
+import { useCreateUserMutation } from "../../../../store/apis/user";
 
 const Register = ({ setIsLogin }) => {
   const [registerStage, setRegisterStage] = useState(1);
@@ -19,10 +20,13 @@ const Register = ({ setIsLogin }) => {
   const [error, setError] = useState({
     firstName: { hasError: false, errorMsg: "Required" },
     lastName: { hasError: false, errorMsg: "Required" },
+    birthday: { hasError: false, errorMsg: "Required" },
     email: { hasError: false, errorMsg: "Email not valid" },
     phoneNumber: { hasError: false, errorMsg: "Phone no. not valid" },
-    password: { hasError: false, errorMsg: "Password do not match" },
+    password: { hasError: false, errorMsg: "Required" },
+    confirmPassword: { hasError: false, errorMsg: "Password do not match" },
   });
+  const [createUser] = useCreateUserMutation();
 
   const inputChangeHandler = (inputName) => (e) => {
     let value = e.target.value;
@@ -34,14 +38,18 @@ const Register = ({ setIsLogin }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (registerStage === 1) {
-      if (formData.firstName !== "" && formData.lastName !== "") {
-        return setRegisterStage(2);
-      }
+      const isFirstNameEmpty = formData.firstName === "";
+      const isLastNameEmpty = formData.lastName === "";
+      const isBirthdayEmpty = formData.birthday === "";
       setError({
         ...error,
-        firstName: { ...error.firstName, hasError: formData.firstName === "" },
-        lastName: { ...error.lastName, hasError: formData.lastName === "" },
+        firstName: { ...error.firstName, hasError: isFirstNameEmpty },
+        lastName: { ...error.lastName, hasError: isLastNameEmpty },
+        birthday: { ...error.birthday, hasError: isBirthdayEmpty },
       });
+      if (!isFirstNameEmpty && !isLastNameEmpty && !isBirthdayEmpty) {
+        return setRegisterStage(2);
+      }
     }
     if (registerStage === 2) {
       const emailRegex = new RegExp(
@@ -49,29 +57,41 @@ const Register = ({ setIsLogin }) => {
         "g"
       );
       const phoneNumberRegex = new RegExp(/^04[0-9]{8}/, "g");
-      if (
-        emailRegex.test(formData.email) &&
-        phoneNumberRegex.test(formData.phoneNumber)
-      ) {
-        return setRegisterStage(3);
-      }
+      const isValidEmail = emailRegex.test(formData.email);
+      const isValidPhoneNumber = phoneNumberRegex.test(formData.phoneNumber);
       setError({
         ...error,
-        email: { ...error.email, hasError: !emailRegex.test(formData.email) },
+        email: { ...error.email, hasError: !isValidEmail },
         phoneNumber: {
           ...error.phoneNumber,
-          hasError: !phoneNumberRegex.test(formData.phoneNumber),
+          hasError: !isValidPhoneNumber,
         },
       });
+      if (isValidEmail && isValidPhoneNumber) {
+        return setRegisterStage(3);
+      }
     }
     if (registerStage === 3) {
+      const isPasswordEmpty = formData.password === "";
+      const isPasswordMatch = formData.password === formData.confirmPassword;
       setError({
         ...error,
         password: {
           ...error.password,
-          hasError: formData.password !== formData.confirmPassword,
+          hasError: isPasswordEmpty,
+        },
+        confirmPassword: {
+          ...error.confirmPassword,
+          hasError: !isPasswordMatch,
         },
       });
+      if (!isPasswordEmpty && isPasswordMatch) {
+        createUser(formData)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+      }
     }
   };
   return (
@@ -105,6 +125,8 @@ const Register = ({ setIsLogin }) => {
               label="Birthday"
               type="date"
               placeholder="Select your birthday"
+              error={error.birthday}
+              value={formData.birthday}
               onChange={inputChangeHandler("birthday")}
             />
             <Select
@@ -148,6 +170,7 @@ const Register = ({ setIsLogin }) => {
               label="Password"
               type="password"
               placeholder="Enter password"
+              error={error.password}
               value={formData.password}
               onChange={inputChangeHandler("password")}
             />
@@ -155,7 +178,7 @@ const Register = ({ setIsLogin }) => {
               label="Confirm password"
               type="password"
               placeholder="Enter password again"
-              error={error.password}
+              error={error.confirmPassword}
               value={formData.confirmPassword}
               onChange={inputChangeHandler("confirmPassword")}
             />
