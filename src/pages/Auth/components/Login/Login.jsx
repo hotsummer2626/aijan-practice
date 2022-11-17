@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.scss";
 import Input from "../../../../components/Input/Input";
 import Button from "../../../../components/Button/Button";
@@ -8,21 +8,52 @@ import facebookLogo from "../../../../assets/facebook_logo.png";
 import googleLogo from "../../../../assets/google_logo.png";
 
 const Login = ({ setIsLogin }) => {
+  const [formData, setFormData] = useState({
+    emailOrPhoneNumber: "",
+    password: "",
+  });
+  const [error, setError] = useState({
+    emailOrPhoneNumber: {
+      hasError: false,
+      errorMsg: "email or phone no. not found",
+    },
+    password: {
+      hasError: false,
+      errorMsg: "email or phone no. or password incorrect",
+    },
+  });
+
+  const inputChangeHandler = (inputName) => (e) =>
+    setFormData({
+      ...formData,
+      [inputName]: e.target.value,
+    });
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={styles.container}>
       <h4>Welcome back</h4>
-      <form className={styles.loginForm}>
+      <form className={styles.loginForm} onSubmit={onSubmitHandler}>
         <Input
           label="Email or Phone No."
           type="text"
           id="emailOrPhone"
           placeholder="Enter email or phone no."
+          error={error.emailOrPhoneNumber}
+          value={formData.emailOrPhoneNumber}
+          onChange={inputChangeHandler("emailOrPhoneNumber")}
         />
         <Input
           label="Password"
           type="password"
           id="password"
           placeholder="Enter password"
+          error={error.password}
+          value={formData.password}
+          onChange={inputChangeHandler("password")}
         />
         <div className={styles.forgotPassword}>Forgot password?</div>
         <Button text="Login" />
